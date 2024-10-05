@@ -24,23 +24,20 @@ class CategoryComsumerListener
     public function handle(ProductEvent $event): void
     {
         //
-        try {
-            $config = config('services.catservice.url');
-            $product = $event->product;
-            $product->slug =  str($product->name)->slug('-');
-            $product->save();
-            $url = $config . '/api/v1/categories/comsummer';
-            $data['product_id'] = $product->id;
-            $data['category_id'] = $product->category;
-            $data['type'] = $event->type;
-            $response = Http::post($url, $data);
+
+        $config = config('services.catservice.url');
+
+        $product = $event->product;
+        $product->slug =  str($product->name)->slug('-');
+        $product->save();
+        $url = $config . '/api/v1/categories/comsummer';
+        $data['product_id'] = $product->id;
+        $data['category_id'] = $product->category;
+        $data['type'] = $event->type;
+        $response = Http::post($url, $data);
+        Log::info("message", [$response]);
+        if ($response->successful()) {
             Log::info("message",  $response);
-            // if ($response->successful()) {
-            //     return response()->json(['data' => $response]);
-            // }
-        } catch (\Throwable $th) {
-            //throw $th;
-            // return response()->json(['message' => 'error']);
         }
     }
     // public function shouldQueue(ProductEvent $event): bool
