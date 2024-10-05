@@ -34,7 +34,12 @@ class CategoryComsumerListener
         $data['product_id'] = $product->id;
         $data['category_id'] = $product->category;
         $data['type'] = $event->type;
-        $response = Http::post($url, $data);
+        $headerconfig = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+
+        ];
+        $response = Http::withHeaders($headerconfig)->post($url, $data);
         Log::info("message", [$response]);
         if ($response->successful()) {
             Log::info("message",  $response);
