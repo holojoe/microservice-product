@@ -21,7 +21,7 @@ class CategoryComsumerListener
     /**
      * Handle the event.
      */
-    public function handle(ProductEvent $event): void
+    public function handle(ProductEvent $event)
     {
         //
 
@@ -32,13 +32,15 @@ class CategoryComsumerListener
         $product->save();
         $url = $config . '/api/v1/categories/comsummer';
         $data['product_id'] = $product->id;
-        $data['category_id'] = $product->category;
+        $data['category_id'] = $product->category_id;
         $data['type'] = $event->type;
         $response = Http::post($url, $data);
         Log::info("message", [$response]);
         if ($response->successful()) {
-            Log::info("message",  $response);
+            Log::info("message",  [$response]);
         }
+
+        return $response;
     }
     // public function shouldQueue(ProductEvent $event): bool
     // {
