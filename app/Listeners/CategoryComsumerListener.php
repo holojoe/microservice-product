@@ -35,12 +35,12 @@ class CategoryComsumerListener
             $data['type'] = $event->type;
             $response = Http::post($url, $data);
             Log::info("message", $data);
-            if ($response->successful()) {
-                return response()->json(['data' => $response]);
-            }
+            // if ($response->successful()) {
+            //     return response()->json(['data' => $response]);
+            // }
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json(['message' => 'error']);
+            // return response()->json(['message' => 'error']);
         }
     }
     // public function shouldQueue(ProductEvent $event): bool
