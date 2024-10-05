@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\ProductEvent;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -24,6 +25,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $request->merge([
+            'product_id' => Str::uuid(),
+        ]);
         $product = Product::create($request->all());
         ProductEvent::dispatch($product, 'create');
     }
