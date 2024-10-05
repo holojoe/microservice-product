@@ -29,7 +29,8 @@ class ProductController extends Controller
             'product_id' => Str::uuid(),
         ]);
         $product = Product::create($request->all());
-        ProductEvent::dispatch($product, 'create');
+        $event = ProductEvent::dispatch($product, 'create');
+        return response()->json($event);
     }
 
     /**
